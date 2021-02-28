@@ -2,7 +2,11 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
-
+/*
+    앱의 정보를 변경하는 config 파일 개념
+    applicationid : 유니크한 앱 id. 마켓에 등록되려면 중복되는 id가 없어야함
+    versioncode : 버전관리를 위한 값. 마켓에 새 버전으로 등록하려면 값을 수정해야함  
+*/
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
