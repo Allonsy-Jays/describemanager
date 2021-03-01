@@ -8,49 +8,45 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.widget.*
 import androidx.appcompat.widget.AlertDialogLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import kotlin.math.log
+import android.R.layout.simple_expandable_list_item_1
+
+
 
 class MainActivity : AppCompatActivity() {
     private val TAG:String = "MainActivity"
+    private val LIST_MENU = arrayOf("ITEM1","ITEM2","ITEM3","ITEM4")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        InitCalinderToday()
-        /*
-            R.layout -> res 하위 layout폴더
-            activity_main.xml을 컨텍스트 뷰로 설정
-            res 폴더 및 하위 폴더들 명칭은 변경하면 안됨. 영어 소문자로 작성
-         */
+        //createBoxDynamically()
+        ListviewCtrl()
+    }
+
+    //리스트뷰 컨트롤
+    private fun ListviewCtrl(){
+        val atr = ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1, LIST_MENU) //SDK에서 제공하는 어댑터는 여러 종류가 있다.
+        val lsview = findViewById(R.id.listview1) as ListView
+        lsview.adapter = atr
 
     }
 
-    private val dllistener = DialogInterface.OnClickListener { dialog, which -> Log.d(TAG,"ok button click") } //람다식 표현
 
-    private val dllistener_lamda = object:DialogInterface.OnClickListener{
-        override fun onClick(dialog:DialogInterface?, which:Int){
-            Log.d(TAG,"객체- cancle button click ")
-        }
-    }//onClick 이벤트를 오버라이드, 리스너 등록
-
-    private fun InitCalinderToday(){
-
-        val adl:AlertDialog.Builder =  AlertDialog.Builder(this);
-
-        adl.setMessage("캘린더 초기화 로직")
-        adl.setTitle("init cal")
-        //adl.setPositiveButton("ok"){_,_-> Log.d(TAG,"확인버튼 클릭")}
-        //adl.setNegativeButton("cancel"){_,_ -> Log.d(TAG,"취소버튼 클릭")} //익명 함수를 사용할때.
-        adl.setPositiveButton("ok",dllistener) //이벤트 리스너 등록 후 사용할때
-        adl.setNegativeButton("cancel",dllistener_lamda)
-
-
-
-        val dialog:AlertDialog;
-        dialog = adl.create()
-        dialog.show()
-
+    //동적 컴포넌트 생성, 추가 - 21.03.01
+    private fun createBoxDynamically(){
+        val box1 = R.layout.boxview
+        val dbtn = Button(this)
+        val layout = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        dbtn.layoutParams = layout
+        val view = findViewById<LinearLayout>(R.id.mylinear)
+        view.addView(dbtn)
 
     }
 
